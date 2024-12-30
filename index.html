@@ -3,6 +3,10 @@
     <base href="https://websim-player/" />
     <meta charset="UTF-8" />
     <title>网飞电影导航</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
     <style>
       * {
         margin: 0;
@@ -119,7 +123,7 @@
       .site-icon {
         width: 28px;
         height: 28px;
-        fill: #e50914;
+        color: #e50914;
         transition: all 0.3s ease;
       }
 
@@ -242,210 +246,112 @@
   <body>
     <header class="header">
       <div class="logo-container">
-        <svg class="logo" viewBox="0 0 24 24">
-          <path
-            d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z M6.5 15h11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5s.22.5.5.5zm0-4h11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5s.22.5.5.5z"
-          />
-        </svg>
+        <i class="fa-solid fa-film site-icon"></i>
         <span class="site-name">Movie Navigator</span>
       </div>
     </header>
 
+    <template id="site-card-template">
+      <div class="site-card">
+        <h3 class="site-title">
+          <i class="site-icon"></i>
+          <span class="title-text"></span>
+        </h3>
+        <p class="site-desc"></p>
+        <div class="site-tags"></div>
+      </div>
+    </template>
+
     <main class="main-content">
       <h2 class="section-title">热门影视导航</h2>
-      <div class="sites-grid">
-        <div
-          class="site-card"
-          onclick="window.open('https://www.cilixiong.com/')"
-        >
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"
-              />
-            </svg>
-            磁力熊
-          </h3>
-          <p class="site-desc">
-            提供高清电影、电视剧、动漫资源下载，支持迅雷磁力下载。更新速度快，资源丰富。
-          </p>
-          <div class="site-tags">
-            <span class="tag">磁力下载</span>
-            <span class="tag">高清资源</span>
-            <span class="tag">更新快</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://tdgo.shop/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"
-              />
-            </svg>
-            火车太堵
-          </h3>
-          <p class="site-desc">提供高清电影、电视剧、动漫资源，更新速度快。</p>
-          <div class="site-tags">
-            <span class="tag">高清资源</span>
-            <span class="tag">更新快</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://ddys.pro/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z"
-              />
-            </svg>
-            低端影视
-          </h3>
-          <p class="site-desc">在线观看影视剧，画质优良，更新及时。</p>
-          <div class="site-tags">
-            <span class="tag">在线观看</span>
-            <span class="tag">无广告</span>
-          </div>
-        </div>
-
-        <div
-          class="site-card"
-          onclick="window.open('https://www.5iltmgi.shop/index/home.html')"
-        >
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z"
-              />
-            </svg>
-            555电影
-          </h3>
-          <p class="site-desc">提供最新影视资源，支持在线观看。</p>
-          <div class="site-tags">
-            <span class="tag">在线播放</span>
-            <span class="tag">更新快</span>
-          </div>
-        </div>
-
-        <div
-          class="site-card"
-          onclick="window.open('https://www.taozi008.com/index.html')"
-        >
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z M6.5 15h11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5s.22.5.5.5z"
-              />
-            </svg>
-            桃子影视
-          </h3>
-          <p class="site-desc">丰富的影视资源库，支持在线观看。</p>
-          <div class="site-tags">
-            <span class="tag">免费观看</span>
-            <span class="tag">资源多</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://www.tzqjdy.com/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z M10 15l5-3-5-3z"
-              />
-            </svg>
-            飘零影院
-          </h3>
-          <p class="site-desc">提供海量影视资源，支持在线播放。</p>
-          <div class="site-tags">
-            <span class="tag">在线播放</span>
-            <span class="tag">高清</span>
-          </div>
-        </div>
-
-        <div
-          class="site-card"
-          onclick="window.open('https://www.mailwhy.com/')"
-        >
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z M8 10h8v6H8z"
-              />
-            </svg>
-            达达兔影视
-          </h3>
-          <p class="site-desc">专注于美剧资源，更新及时。</p>
-          <div class="site-tags">
-            <span class="tag">美剧资源</span>
-            <span class="tag">更新快</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://www.sypfjy.com/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z M9 12l5 3-5 3z"
-              />
-            </svg>
-            思乐影视
-          </h3>
-          <p class="site-desc">提供最新电影电视剧在线观看。</p>
-          <div class="site-tags">
-            <span class="tag">在线播放</span>
-            <span class="tag">资源全</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://cupfoxys.cc/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"
-              />
-            </svg>
-            茶杯狐
-          </h3>
-          <p class="site-desc">影视搜索引擎，帮您找到想看的影视资源。</p>
-          <div class="site-tags">
-            <span class="tag">搜索引擎</span>
-            <span class="tag">资源聚合</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://www.feitu.tv/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z M9 13h6v2H9z"
-              />
-            </svg>
-            飞兔影视
-          </h3>
-          <p class="site-desc">海量影视资源在线观看，更新及时。</p>
-          <div class="site-tags">
-            <span class="tag">在线播放</span>
-            <span class="tag">更新快</span>
-          </div>
-        </div>
-
-        <div class="site-card" onclick="window.open('https://www.duboku.tv/')">
-          <h3 class="site-title">
-            <svg class="site-icon" viewBox="0 0 24 24">
-              <path
-                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z M8 15l5-3-5-3z"
-              />
-            </svg>
-            独播库
-          </h3>
-          <p class="site-desc">海量影视资源在线观看，更新及时。</p>
-          <div class="site-tags">
-            <span class="tag">在线播放</span>
-            <span class="tag">更新快</span>
-          </div>
-        </div>
+      <div class="sites-grid" id="sites-container">
+        <!-- 卡片将通过 JavaScript 动态生成 -->
       </div>
     </main>
+
+    <script type="application/json" id="sites-data">
+      {
+        "sites": [
+          {
+            "name": "磁力熊",
+            "url": "https://www.cilixiong.com/",
+            "icon": "fa-solid fa-magnet",
+            "description": "提供高清电影、电视剧、动漫资源下载，支持迅雷磁力下载。更新速度快，资源丰富。",
+            "tags": ["磁力下载", "高清资源", "更新快"]
+          },
+          {
+            "name": "火车太堵",
+            "url": "https://tdgo.shop/",
+            "icon": "fa-solid fa-train",
+            "description": "提供高清电影、电视剧、动漫资源，更新速度快。",
+            "tags": ["高清资源", "更新快"]
+          },
+          {
+            "name": "低端影视",
+            "url": "https://ddys.pro/",
+            "icon": "fa-solid fa-video",
+            "description": "在线观看影视剧，画质优良，更新及时。",
+            "tags": ["在线观看", "无广告"]
+          },
+          {
+            "name": "555电影",
+            "url": "https://www.5iltmgi.shop/index/home.html",
+            "icon": "fa-solid fa-play",
+            "description": "提供最新影视资源，支持在线观看。",
+            "tags": ["在线播放", "更新快"]
+          },
+          {
+            "name": "桃子影视",
+            "url": "https://www.taozi008.com/index.html",
+            "icon": "fa-solid fa-apple-whole",
+            "description": "丰富的影视资源库，支持在线观看。",
+            "tags": ["免费观看", "资源多"]
+          },
+          {
+            "name": "飘零影院",
+            "url": "https://www.tzqjdy.com/",
+            "icon": "fa-solid fa-film",
+            "description": "提供海量影视资源，支持在线播放。",
+            "tags": ["在线播放", "高清"]
+          },
+          {
+            "name": "达达兔影视",
+            "url": "https://www.mailwhy.com/",
+            "icon": "fa-solid fa-tv",
+            "description": "专注于美剧资源，更新及时。",
+            "tags": ["美剧资源", "更新快"]
+          },
+          {
+            "name": "思乐影视",
+            "url": "https://www.sypfjy.com/",
+            "icon": "fa-solid fa-play",
+            "description": "提供最新电影电视剧在线观看。",
+            "tags": ["在线播放", "资源全"]
+          },
+          {
+            "name": "茶杯狐",
+            "url": "https://cupfoxys.cc/",
+            "icon": "fa-solid fa-magnifying-glass",
+            "description": "影视搜索引擎，帮您找到想看的影视资源。",
+            "tags": ["搜索引擎", "资源聚合"]
+          },
+          {
+            "name": "飞兔影视",
+            "url": "https://www.feitu.tv/",
+            "icon": "fa-solid fa-play",
+            "description": "海量影视资源在线观看，更新及时。",
+            "tags": ["在线播放", "更新快"]
+          },
+          {
+            "name": "独播库",
+            "url": "https://www.duboku.tv/",
+            "icon": "fa-solid fa-tv",
+            "description": "海量影视资源在线观看，更新及时。",
+            "tags": ["在线播放", "更新快"]
+          }
+        ]
+      }
+    </script>
 
     <script>
       window.addEventListener("scroll", () => {
@@ -456,6 +362,41 @@
           header.style.background =
             "linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.75) 50%, rgba(20, 20, 20, 0) 100%)";
         }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const template = document.getElementById("site-card-template");
+        const container = document.getElementById("sites-container");
+        const sitesData = JSON.parse(
+          document.getElementById("sites-data").textContent
+        );
+
+        sitesData.sites.forEach((site) => {
+          const card = template.content.cloneNode(true);
+
+          // 设置点击事件
+          card.querySelector(".site-card").onclick = () =>
+            window.open(site.url);
+
+          // 设置图标和标题
+          const icon = card.querySelector(".site-icon");
+          icon.className = `${site.icon} site-icon`;
+          card.querySelector(".title-text").textContent = site.name;
+
+          // 设置描述
+          card.querySelector(".site-desc").textContent = site.description;
+
+          // 设置标签
+          const tagsContainer = card.querySelector(".site-tags");
+          site.tags.forEach((tag) => {
+            const span = document.createElement("span");
+            span.className = "tag";
+            span.textContent = tag;
+            tagsContainer.appendChild(span);
+          });
+
+          container.appendChild(card);
+        });
       });
     </script>
   </body>
