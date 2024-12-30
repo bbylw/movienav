@@ -1,0 +1,447 @@
+<html>
+  <head>
+    <base href="https://websim-player/" />
+    <meta charset="UTF-8" />
+    <title>网飞电影导航</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: #141414;
+        color: #fff;
+        line-height: 1.4;
+        min-height: 100vh;
+      }
+
+      .header {
+        padding: 16px 4%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+        background: linear-gradient(
+          180deg,
+          rgba(20, 20, 20, 0.95) 0%,
+          rgba(20, 20, 20, 0.75) 50%,
+          rgba(20, 20, 20, 0) 100%
+        );
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        transition: all 0.3s ease;
+      }
+
+      .logo-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo {
+        width: 32px;
+        height: 32px;
+        fill: #e50914;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .site-name {
+        color: #fff;
+        font-size: 1.4rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .logo:hover {
+        transform: scale(1.1);
+      }
+
+      .main-content {
+        padding: 100px 4% 60px;
+        min-height: 100vh;
+        background: linear-gradient(
+          180deg,
+          #141414 0%,
+          #181818 50%,
+          #141414 100%
+        );
+      }
+
+      .section-title {
+        font-size: 2rem;
+        margin: 0 0 40px;
+        font-weight: 700;
+        color: #fff;
+      }
+
+      .sites-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+        margin-top: 20px;
+      }
+
+      .site-card {
+        background: #181818;
+        border-radius: 4px;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+      }
+
+      .site-card:hover {
+        transform: scale(1.03);
+        background: #232323;
+      }
+
+      .site-title {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+      }
+
+      .site-icon {
+        width: 28px;
+        height: 28px;
+        fill: #e50914;
+        transition: all 0.3s ease;
+      }
+
+      .site-card:hover .site-icon {
+        transform: scale(1.1);
+      }
+
+      .site-desc {
+        font-size: 0.95rem;
+        color: #999;
+        line-height: 1.6;
+        margin-bottom: 16px;
+      }
+
+      .site-tags {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        background: rgba(229, 9, 20, 0.1);
+        color: #e50914;
+        padding: 6px 12px;
+        border-radius: 2px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        transition: all 0.2s ease;
+      }
+
+      .site-card:hover .tag {
+        background: rgba(229, 9, 20, 0.15);
+        color: #ff1a1a;
+      }
+
+      @media (max-width: 1200px) {
+        .sites-grid {
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 12px 4%;
+        }
+
+        .logo {
+          width: 28px;
+          height: 28px;
+        }
+
+        .site-name {
+          font-size: 1.2rem;
+        }
+
+        .section-title {
+          font-size: 1.6rem;
+          margin: 0 0 30px;
+        }
+
+        .sites-grid {
+          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 20px;
+        }
+
+        .site-card {
+          padding: 20px;
+        }
+
+        .site-title {
+          font-size: 1.2rem;
+        }
+
+        .site-desc {
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .sites-grid {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .site-card {
+          padding: 16px;
+        }
+
+        .site-name {
+          font-size: 1.1rem;
+        }
+
+        .section-title {
+          font-size: 1.4rem;
+          margin: 0 0 24px;
+        }
+      }
+
+      @media (min-width: 2000px) {
+        .sites-grid {
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+
+        .site-card {
+          padding: 32px;
+        }
+
+        .site-title {
+          font-size: 1.5rem;
+        }
+
+        .site-desc {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="logo-container">
+        <svg class="logo" viewBox="0 0 24 24">
+          <path
+            d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z M6.5 15h11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5s.22.5.5.5zm0-4h11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5s.22.5.5.5z"
+          />
+        </svg>
+        <span class="site-name">Movie Navigator</span>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <h2 class="section-title">热门影视导航</h2>
+      <div class="sites-grid">
+        <!-- 原有的卡片 -->
+        <div
+          class="site-card"
+          onclick="window.open('https://www.cilixiong.com/')"
+        >
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"
+              />
+            </svg>
+            磁力熊
+          </h3>
+          <p class="site-desc">
+            提供高清电影、电视剧、动漫资源下载，支持迅雷磁力下载。更新速度快，资源丰富。
+          </p>
+          <div class="site-tags">
+            <span class="tag">磁力下载</span>
+            <span class="tag">高清资源</span>
+            <span class="tag">更新快</span>
+          </div>
+        </div>
+
+        <div class="site-card" onclick="window.open('https://tdgo.shop/')">
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"
+              />
+            </svg>
+            TDGO影视
+          </h3>
+          <p class="site-desc">在线观看各类影视作品，画质清晰，播放流畅。</p>
+          <div class="site-tags">
+            <span class="tag">在线播放</span>
+            <span class="tag">高清资源</span>
+          </div>
+        </div>
+
+        <div class="site-card" onclick="window.open('https://ddys.art/')">
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z"
+              />
+            </svg>
+            低端影视
+          </h3>
+          <p class="site-desc">在线观看影视剧，画质优良，更新及时。</p>
+          <div class="site-tags">
+            <span class="tag">在线观看</span>
+            <span class="tag">无广告</span>
+          </div>
+        </div>
+
+        <div
+          class="site-card"
+          onclick="window.open('https://www.5iltmgi.shop/index/home.html')"
+        >
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z"
+              />
+            </svg>
+            5IL影视
+          </h3>
+          <p class="site-desc">提供最新影视资源，支持在线观看。</p>
+          <div class="site-tags">
+            <span class="tag">在线播放</span>
+            <span class="tag">更新快</span>
+          </div>
+        </div>
+
+        <div
+          class="site-card"
+          onclick="window.open('https://www.taozi008.com/index.html')"
+        >
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z M6.5 15h11c.28 0 .5-.22.5-.5s-.22-.5-.5-.5h-11c-.28 0-.5.22-.5.5s.22.5.5.5z"
+              />
+            </svg>
+            桃子影视
+          </h3>
+          <p class="site-desc">丰富的影视资源库，支持在线观看。</p>
+          <div class="site-tags">
+            <span class="tag">免费观看</span>
+            <span class="tag">资源多</span>
+          </div>
+        </div>
+
+        <div class="site-card" onclick="window.open('https://www.tzqjdy.com/')">
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z M10 15l5-3-5-3z"
+              />
+            </svg>
+            泰州影院
+          </h3>
+          <p class="site-desc">提供海量影视资源，支持在线播放。</p>
+          <div class="site-tags">
+            <span class="tag">在线播放</span>
+            <span class="tag">高清</span>
+          </div>
+        </div>
+
+        <div
+          class="site-card"
+          onclick="window.open('https://www.mailwhy.com/')"
+        >
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4zM4 18V6h0.57l1.07 2h12.72l1.07-2H20v12H4z M8 10h8v6H8z"
+              />
+            </svg>
+            麦耳影视
+          </h3>
+          <p class="site-desc">专注于美剧资源，更新及时。</p>
+          <div class="site-tags">
+            <span class="tag">美剧资源</span>
+            <span class="tag">更新快</span>
+          </div>
+        </div>
+
+        <div class="site-card" onclick="window.open('https://www.sypfjy.com/')">
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z M9 12l5 3-5 3z"
+              />
+            </svg>
+            思乐影视
+          </h3>
+          <p class="site-desc">提供最新电影电视剧在线观看。</p>
+          <div class="site-tags">
+            <span class="tag">在线播放</span>
+            <span class="tag">资源全</span>
+          </div>
+        </div>
+
+        <div class="site-card" onclick="window.open('https://www.feitu.tv/')">
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M4 6.47L5.76 10H20v8H4V6.47M22 4h-4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z M9 13h6v2H9z"
+              />
+            </svg>
+            飞兔影视
+          </h3>
+          <p class="site-desc">影视搜索引擎，帮您找到想看的影视资源。</p>
+          <div class="site-tags">
+            <span class="tag">搜索引擎</span>
+            <span class="tag">资源聚合</span>
+          </div>
+        </div>
+
+        <div class="site-card" onclick="window.open('https://www.duboku.tv/')">
+          <h3 class="site-title">
+            <svg class="site-icon" viewBox="0 0 24 24">
+              <path
+                d="M21 3H3c-1.11 0-2 .89-2 2v12c0 1.1.89 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 14H3V5h18v12zm-5-7v2H8v-2h8z M8 15l5-3-5-3z"
+              />
+            </svg>
+            独播库
+          </h3>
+          <p class="site-desc">海量影视资源在线观看，更新及时。</p>
+          <div class="site-tags">
+            <span class="tag">在线播放</span>
+            <span class="tag">更新快</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      window.addEventListener("scroll", () => {
+        const header = document.querySelector(".header");
+        if (window.scrollY > 50) {
+          header.style.background = "#141414";
+        } else {
+          header.style.background =
+            "linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.75) 50%, rgba(20, 20, 20, 0) 100%)";
+        }
+      });
+    </script>
+  </body>
+</html>
