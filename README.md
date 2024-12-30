@@ -2,7 +2,7 @@
 
 一个 Netflix 风格的影视导航网站，采用纯静态设计，可轻松部署到 Cloudflare Pages 或 GitHub Pages。
 
-![Netflix Style](https://i.imgur.com/example.png)
+
 
 ## 特点
 
