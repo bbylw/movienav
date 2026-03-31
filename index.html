@@ -2,12 +2,35 @@
   <head>
     <base href="https://websim-player/" />
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>网飞电影导航</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <style>
+      :root {
+        --bg-primary: #0a0a0c;
+        --bg-card: #131318;
+        --bg-card-hover: #1a1a22;
+        --accent: #e50914;
+        --accent-dim: rgba(229, 9, 20, 0.12);
+        --accent-glow: rgba(229, 9, 20, 0.25);
+        --text-primary: #f0eff4;
+        --text-secondary: #8a8994;
+        --text-muted: #5a5968;
+        --border: rgba(255, 255, 255, 0.06);
+        --border-hover: rgba(255, 255, 255, 0.12);
+        --radius: 16px;
+        --radius-sm: 8px;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -15,259 +38,525 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          sans-serif;
-        background: #141414;
-        color: #fff;
-        line-height: 1.4;
-        min-height: 100vh;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.5;
+        min-height: 100dvh;
+        overflow-x: hidden;
       }
 
+      /* ── Noise texture overlay ── */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-repeat: repeat;
+        background-size: 200px 200px;
+      }
+
+      /* ── Gradient mesh background ── */
+      .bg-mesh {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 80% 60% at 10% 0%, rgba(229, 9, 20, 0.08) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 50% at 90% 80%, rgba(80, 20, 60, 0.06) 0%, transparent 50%),
+          radial-gradient(ellipse 50% 40% at 50% 50%, rgba(20, 20, 40, 0.3) 0%, transparent 60%);
+      }
+
+      /* ── Header ── */
       .header {
-        padding: 16px 4%;
+        padding: 20px 5%;
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         z-index: 999;
-        background: linear-gradient(
-          180deg,
-          rgba(20, 20, 20, 0.95) 0%,
-          rgba(20, 20, 20, 0.75) 50%,
-          rgba(20, 20, 20, 0) 100%
-        );
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-        transition: all 0.3s ease;
+        justify-content: space-between;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .header.scrolled {
+        padding: 14px 5%;
+        background: rgba(10, 10, 12, 0.85);
+        backdrop-filter: blur(24px) saturate(1.2);
+        -webkit-backdrop-filter: blur(24px) saturate(1.2);
+        border-bottom: 1px solid var(--border);
       }
 
       .logo-container {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 14px;
       }
 
-      .logo {
-        width: 32px;
-        height: 32px;
-        fill: #e50914;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        background: var(--accent);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #fff;
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .logo-mark:hover {
+        transform: scale(1.1) rotate(-4deg);
       }
 
       .site-name {
-        color: #fff;
-        font-size: 1.4rem;
-        font-weight: 600;
+        font-family: "Space Grotesk", sans-serif;
+        color: var(--text-primary);
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .header-stats {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
         letter-spacing: 0.5px;
         text-transform: uppercase;
+        font-weight: 500;
       }
 
-      .logo:hover {
-        transform: scale(1.1);
+      .header-stats span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
+      .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background: #34d399;
+        border-radius: 50%;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+      }
+
+      /* ── Hero ── */
+      .hero {
+        position: relative;
+        z-index: 1;
+        padding: 140px 5% 60px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .hero-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        background: var(--accent-dim);
+        border: 1px solid rgba(229, 9, 20, 0.2);
+        border-radius: 100px;
+        font-size: 0.75rem;
+        color: var(--accent);
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        opacity: 0;
+        transform: translateY(12px);
+        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      }
+
+      .hero-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        font-weight: 700;
+        letter-spacing: -2px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+        max-width: 700px;
+        opacity: 0;
+        transform: translateY(16px);
+        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      }
+
+      .hero-title .accent {
+        color: var(--accent);
+      }
+
+      .hero-desc {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        max-width: 520px;
+        line-height: 1.7;
+        opacity: 0;
+        transform: translateY(16px);
+        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+      }
+
+      @keyframes fadeUp {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+
+
+      /* ── Main content ── */
       .main-content {
-        padding: 100px 4% 60px;
-        min-height: 100vh;
-        background: linear-gradient(
-          180deg,
-          #141414 0%,
-          #181818 50%,
-          #141414 100%
-        );
+        position: relative;
+        z-index: 1;
+        padding: 20px 5% 80px;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .section-header {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin-bottom: 32px;
       }
 
       .section-title {
-        font-size: 2rem;
-        margin: 0 0 40px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
         font-weight: 700;
-        color: #fff;
+        letter-spacing: -0.5px;
       }
 
+      .section-count {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        font-weight: 500;
+      }
+
+      /* ── Sites grid – masonry-style layout ── */
       .sites-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 24px;
-        margin-top: 20px;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 16px;
       }
 
+      /* ── Site card ── */
       .site-card {
-        background: #181818;
-        border-radius: 4px;
+        --index: 0;
+        background: var(--bg-card);
+        border-radius: var(--radius);
         overflow: hidden;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         cursor: pointer;
-        padding: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 28px;
+        border: 1px solid var(--border);
         position: relative;
+        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity: 0;
+        transform: translateY(20px);
+        animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--index) * 60ms + 0.4s) forwards;
+      }
+
+      @keyframes cardIn {
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Spotlight gradient on hover */
+      .site-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(229, 9, 20, 0.06),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        border-radius: var(--radius);
+      }
+
+      .site-card:hover::before {
+        opacity: 1;
       }
 
       .site-card:hover {
-        transform: scale(1.03);
-        background: #232323;
+        background: var(--bg-card-hover);
+        border-color: var(--border-hover);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
       }
 
-      .site-title {
-        font-size: 1.3rem;
-        margin-bottom: 12px;
-        color: #fff;
+      .site-card:active {
+        transform: translateY(-2px) scale(0.98);
+      }
+
+      .card-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .card-icon-wrap {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        background: var(--accent-dim);
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-weight: 600;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       }
 
-      .site-icon {
-        width: 28px;
-        height: 28px;
-        color: #e50914;
+      .site-card:hover .card-icon-wrap {
+        background: var(--accent-glow);
+        transform: scale(1.08);
+      }
+
+      .card-icon-wrap i {
+        color: var(--accent);
+        font-size: 1.1rem;
+      }
+
+      .card-arrow {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        opacity: 0;
+        transform: translate(-4px, 4px);
         transition: all 0.3s ease;
       }
 
-      .site-card:hover .site-icon {
-        transform: scale(1.1);
+      .site-card:hover .card-arrow {
+        opacity: 1;
+        transform: translate(0, 0);
+        color: var(--accent);
+      }
+
+      .site-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+        margin-bottom: 8px;
+        color: var(--text-primary);
       }
 
       .site-desc {
-        font-size: 0.95rem;
-        color: #999;
-        line-height: 1.6;
-        margin-bottom: 16px;
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.65;
+        margin-bottom: 20px;
       }
 
       .site-tags {
         display: flex;
-        gap: 8px;
-        margin-top: 12px;
+        gap: 6px;
         flex-wrap: wrap;
       }
 
       .tag {
-        background: rgba(229, 9, 20, 0.1);
-        color: #e50914;
-        padding: 6px 12px;
-        border-radius: 2px;
-        font-size: 0.85rem;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
         font-weight: 500;
-        letter-spacing: 0.3px;
-        transition: all 0.2s ease;
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-muted);
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        transition: all 0.25s ease;
+        letter-spacing: 0.2px;
       }
 
       .site-card:hover .tag {
-        background: rgba(229, 9, 20, 0.15);
-        color: #ff1a1a;
+        background: var(--accent-dim);
+        color: var(--accent);
+        border-color: rgba(229, 9, 20, 0.15);
       }
 
-      @media (max-width: 1200px) {
-        .sites-grid {
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        }
+      /* ── Footer ── */
+      .footer {
+        position: relative;
+        z-index: 1;
+        padding: 40px 5%;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
       }
 
+      .footer-text {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+
+      .footer-links {
+        display: flex;
+        gap: 20px;
+      }
+
+      .footer-links a {
+        color: var(--text-muted);
+        text-decoration: none;
+        font-size: 0.8rem;
+        transition: color 0.2s;
+      }
+
+      .footer-links a:hover {
+        color: var(--text-primary);
+      }
+
+      /* ── Back to top ── */
+      .back-to-top {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        z-index: 998;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: rgba(10, 10, 12, 0.8);
+        backdrop-filter: blur(16px);
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(8px);
+        transition: all 0.3s ease;
+      }
+
+      .back-to-top.visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .back-to-top:hover {
+        background: var(--bg-card-hover);
+        border-color: var(--border-hover);
+        color: var(--text-primary);
+      }
+
+      /* ── Responsive ── */
       @media (max-width: 768px) {
-        .header {
-          padding: 12px 4%;
+        .hero {
+          padding: 120px 5% 40px;
         }
 
-        .logo {
-          width: 28px;
-          height: 28px;
+        .hero-title {
+          letter-spacing: -1px;
         }
 
-        .site-name {
-          font-size: 1.2rem;
-        }
-
-        .section-title {
-          font-size: 1.6rem;
-          margin: 0 0 30px;
+        .header-stats {
+          display: none;
         }
 
         .sites-grid {
-          grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-          gap: 20px;
+          grid-template-columns: 1fr;
+          gap: 12px;
         }
 
         .site-card {
-          padding: 20px;
+          padding: 22px;
         }
 
-        .site-title {
-          font-size: 1.2rem;
-        }
-
-        .site-desc {
-          font-size: 0.9rem;
+        .footer {
+          flex-direction: column;
+          gap: 16px;
+          text-align: center;
         }
       }
 
       @media (max-width: 480px) {
-        .sites-grid {
-          grid-template-columns: 1fr;
-          gap: 16px;
-        }
-
-        .site-card {
-          padding: 16px;
+        .hero {
+          padding: 110px 5% 32px;
         }
 
         .site-name {
           font-size: 1.1rem;
         }
 
-        .section-title {
-          font-size: 1.4rem;
-          margin: 0 0 24px;
+        .search-bar input {
+          padding: 12px 16px 12px 44px;
+          font-size: 0.9rem;
         }
       }
 
-      @media (min-width: 2000px) {
+      @media (min-width: 1800px) {
         .sites-grid {
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          grid-template-columns: repeat(4, 1fr);
         }
+      }
 
-        .site-card {
-          padding: 32px;
-        }
-
-        .site-title {
-          font-size: 1.5rem;
-        }
-
-        .site-desc {
-          font-size: 1.1rem;
+      /* ── Reduced motion ── */
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+          animation-duration: 0.01ms !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
   <body>
-    <header class="header">
+    <div class="bg-mesh"></div>
+
+    <header class="header" id="header">
       <div class="logo-container">
-        <i class="fa-solid fa-film site-icon"></i>
+        <div class="logo-mark">
+          <i class="fa-solid fa-play" style="font-size: 14px; margin-left: 2px"></i>
+        </div>
         <span class="site-name">Movie Navigator</span>
+      </div>
+      <div class="header-stats">
+        <span><span class="pulse-dot"></span> 全部在线</span>
       </div>
     </header>
 
-    <template id="site-card-template">
-      <div class="site-card">
-        <h3 class="site-title">
-          <i class="site-icon"></i>
-          <span class="title-text"></span>
-        </h3>
-        <p class="site-desc"></p>
-        <div class="site-tags"></div>
+    <section class="hero">
+      <div class="hero-label">
+        <i class="fa-solid fa-fire" style="font-size: 10px"></i>
+        影视资源聚合
       </div>
-    </template>
+      <h1 class="hero-title">
+        发现你的下一部<br /><span class="accent">必看佳片</span>
+      </h1>
+      <p class="hero-desc">
+        精选优质影视导航站点，涵盖在线播放、磁力下载、资源搜索等分类，一站直达。
+      </p>
+
+    </section>
 
     <main class="main-content">
-      <h2 class="section-title">热门影视导航</h2>
-      <div class="sites-grid" id="sites-container">
-        <!-- 卡片将通过 JavaScript 动态生成 -->
-      </div>
+      <div class="sites-grid" id="sites-container"></div>
     </main>
+
+    <footer class="footer">
+      <span class="footer-text">© 2026 Movie Navigator · 仅供导航，不存储任何资源</span>
+      <div class="footer-links">
+        <a href="#">关于</a>
+        <a href="#">反馈</a>
+      </div>
+    </footer>
+
+    <button class="back-to-top" id="back-to-top" title="回到顶部">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     <script type="application/json" id="sites-data">
       {
@@ -296,7 +585,7 @@
           {
             "name": "华视影院",
             "url": "https://huavod.com/",
-            "icon": "fa-solid fa-play",
+            "icon": "fa-solid fa-clapperboard",
             "description": "提供最新影视资源，支持在线观看。",
             "tags": ["在线播放", "更新快"]
           },
@@ -324,7 +613,7 @@
           {
             "name": "注视影视",
             "url": "https://gaze.run/",
-            "icon": "fa-solid fa-play",
+            "icon": "fa-solid fa-eye",
             "description": "提供最新电影电视剧在线观看。",
             "tags": ["在线播放", "资源全"]
           },
@@ -338,42 +627,42 @@
           {
             "name": "厂长资源",
             "url": "https://www.czzy77.com/",
-            "icon": "fa-solid fa-magnifying-glass",
-            "description": "影视搜索引擎，帮您找到想看的影视资源。",
+            "icon": "fa-solid fa-warehouse",
+            "description": "影视资源聚合站，资源齐全，分类清晰。",
             "tags": ["搜索引擎", "资源聚合"]
           },
           {
             "name": "NO视频",
             "url": "https://www.novipnoad.net/",
-            "icon": "fa-solid fa-play",
+            "icon": "fa-solid fa-circle-play",
             "description": "海量影视资源在线观看，更新及时。",
             "tags": ["在线播放", "更新快"]
           },
           {
             "name": "libvio",
             "url": "https://www.libvio.link/",
-            "icon": "fa-solid fa-play",
+            "icon": "fa-solid fa-bookmark",
             "description": "海量影视资源在线观看，更新及时。",
             "tags": ["在线播放", "更新快"]
           },
           {
             "name": "修罗影视",
             "url": "https://www.xlys01.com/",
-            "icon": "fa-solid fa-play",
+            "icon": "fa-solid fa-bolt",
             "description": "海量影视资源在线观看，更新及时。",
             "tags": ["在线播放", "更新快"]
           },
           {
             "name": "独播库",
             "url": "https://duboku.info/",
-            "icon": "fa-solid fa-tv",
+            "icon": "fa-solid fa-database",
             "description": "海量影视资源在线观看，更新及时。",
             "tags": ["在线播放", "更新快"]
           },
           {
             "name": "爱壹帆",
             "url": "https://www.iyf.tv/",
-            "icon": "fa-solid fa-play-circle",
+            "icon": "fa-solid fa-sailboat",
             "description": "海量高清视频免费在线观看，提供最新电影、电视剧、综艺和动漫资源。",
             "tags": ["免费观看", "高清视频", "更新快"]
           }
@@ -382,50 +671,62 @@
     </script>
 
     <script>
-      window.addEventListener("scroll", () => {
-        const header = document.querySelector(".header");
-        if (window.scrollY > 50) {
-          header.style.background = "#141414";
-        } else {
-          header.style.background =
-            "linear-gradient(180deg, rgba(20, 20, 20, 0.95) 0%, rgba(20, 20, 20, 0.75) 50%, rgba(20, 20, 20, 0) 100%)";
-        }
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-        const template = document.getElementById("site-card-template");
+      (() => {
+        const header = document.getElementById("header");
+        const backToTop = document.getElementById("back-to-top");
         const container = document.getElementById("sites-container");
-        const sitesData = JSON.parse(
-          document.getElementById("sites-data").textContent
-        );
+        const sitesData = JSON.parse(document.getElementById("sites-data").textContent);
+        const sites = sitesData.sites;
 
-        sitesData.sites.forEach((site) => {
-          const card = template.content.cloneNode(true);
+        // ── Render cards
+        function renderCards() {
+          container.innerHTML = "";
+          sites.forEach((site, idx) => {
+            const card = document.createElement("div");
+            card.className = "site-card";
+            card.style.setProperty("--index", idx);
+            card.innerHTML = `
+              <div class="card-top">
+                <div class="card-icon-wrap"><i class="${site.icon}"></i></div>
+                <i class="fa-solid fa-arrow-up-right card-arrow"></i>
+              </div>
+              <h3 class="site-title">${site.name}</h3>
+              <p class="site-desc">${site.description}</p>
+              <div class="site-tags">${site.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+            `;
+            card.addEventListener("click", () => window.open(site.url, "_blank", "noopener"));
 
-          // 设置点击事件
-          card.querySelector(".site-card").onclick = () =>
-            window.open(site.url);
+            // Spotlight effect
+            card.addEventListener("mousemove", e => {
+              const rect = card.getBoundingClientRect();
+              card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+              card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+            });
 
-          // 设置图标和标题
-          const icon = card.querySelector(".site-icon");
-          icon.className = `${site.icon} site-icon`;
-          card.querySelector(".title-text").textContent = site.name;
-
-          // 设置描述
-          card.querySelector(".site-desc").textContent = site.description;
-
-          // 设置标签
-          const tagsContainer = card.querySelector(".site-tags");
-          site.tags.forEach((tag) => {
-            const span = document.createElement("span");
-            span.className = "tag";
-            span.textContent = tag;
-            tagsContainer.appendChild(span);
+            container.appendChild(card);
           });
 
-          container.appendChild(card);
+        }
+
+        renderCards();
+
+        // ── Scroll events
+        let ticking = false;
+        window.addEventListener("scroll", () => {
+          if (!ticking) {
+            requestAnimationFrame(() => {
+              header.classList.toggle("scrolled", window.scrollY > 40);
+              backToTop.classList.toggle("visible", window.scrollY > 400);
+              ticking = false;
+            });
+            ticking = true;
+          }
         });
-      });
+
+        backToTop.addEventListener("click", () => {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      })();
     </script>
   </body>
 </html>
