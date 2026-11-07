@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c1c24"/>
+      <stop offset="1" stop-color="#0a0a0c"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff3b47"/>
+      <stop offset="1" stop-color="#b20710"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#e50914" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#e50914" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#bg)"/>
+  <rect x="1" y="1" width="62" height="62" rx="14" fill="none" stroke="#ffffff" stroke-opacity="0.08" stroke-width="2"/>
+  <circle cx="32" cy="32" r="26" fill="url(#glow)"/>
+  <!-- film strip perforations -->
+  <g fill="#ffffff" fill-opacity="0.18">
+    <rect x="7" y="12" width="4" height="6" rx="1"/>
+    <rect x="7" y="29" width="4" height="6" rx="1"/>
+    <rect x="7" y="46" width="4" height="6" rx="1"/>
+    <rect x="53" y="12" width="4" height="6" rx="1"/>
+    <rect x="53" y="29" width="4" height="6" rx="1"/>
+    <rect x="53" y="46" width="4" height="6" rx="1"/>
+  </g>
+  <!-- play button -->
+  <circle cx="32" cy="32" r="16" fill="url(#red)"/>
+  <circle cx="32" cy="32" r="16" fill="none" stroke="#ffffff" stroke-opacity="0.25" stroke-width="1.5"/>
+  <path d="M28 24.5 L41 32 L28 39.5 Z" fill="#ffffff" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+</svg>
