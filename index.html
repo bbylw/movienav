@@ -14,18 +14,15 @@
       content="精选优质影视导航站点，涵盖在线播放、磁力下载、资源搜索等分类，一站直达。"
     />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#0a0a0c" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%231c1c24'/%3E%3Cstop offset='1' stop-color='%230a0a0c'/%3E%3C/linearGradient%3E%3ClinearGradient id='red' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ff3b47'/%3E%3Cstop offset='1' stop-color='%23b20710'/%3E%3C/linearGradient%3E%3CradialGradient id='glow' cx='0.5' cy='0.5' r='0.5'%3E%3Cstop offset='0' stop-color='%23e50914' stop-opacity='0.45'/%3E%3Cstop offset='1' stop-color='%23e50914' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='15' fill='url(%23bg)'/%3E%3Crect x='1' y='1' width='62' height='62' rx='14' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='26' fill='url(%23glow)'/%3E%3Cg fill='%23ffffff' fill-opacity='0.18'%3E%3Crect x='7' y='12' width='4' height='6' rx='1'/%3E%3Crect x='7' y='29' width='4' height='6' rx='1'/%3E%3Crect x='7' y='46' width='4' height='6' rx='1'/%3E%3Crect x='53' y='12' width='4' height='6' rx='1'/%3E%3Crect x='53' y='29' width='4' height='6' rx='1'/%3E%3Crect x='53' y='46' width='4' height='6' rx='1'/%3E%3C/g%3E%3Ccircle cx='32' cy='32' r='16' fill='url(%23red)'/%3E%3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23ffffff' stroke-opacity='0.25' stroke-width='1.5'/%3E%3Cpath d='M28 24.5 L41 32 L28 39.5 Z' fill='%23ffffff' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E"
-    />
+    <meta name="theme-color" content="#09090b" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
@@ -44,8 +41,12 @@
         --text-muted: #757482;
         --border: rgba(255, 255, 255, 0.065);
         --border-hover: rgba(255, 255, 255, 0.14);
-        --radius: 16px;
-        --radius-sm: 8px;
+        --radius-lg: 16px;
+        --radius-md: 12px;
+        --radius-sm: 6px;
+        --z-base: 1;
+        --z-floating: 90;
+        --z-header: 100;
         --ease: cubic-bezier(0.22, 1, 0.36, 1);
         --gutter: calc(max(0px, (100vw - 1400px) / 2) + 5vw);
         --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
@@ -66,7 +67,9 @@
         outline-offset: 3px;
       }
 
-      * {
+      *,
+      *::before,
+      *::after {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -117,7 +120,7 @@
         top: 0;
         left: 0;
         right: 0;
-        z-index: 999;
+        z-index: var(--z-header);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -154,12 +157,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 13px;
+        font-size: 0.8125rem;
         color: #fff;
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.28),
           0 6px 20px -4px rgba(229, 9, 20, 0.45);
-        transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+        transition:
+          transform 0.4s var(--ease),
+          box-shadow 0.4s var(--ease);
       }
 
       .logo-mark i {
@@ -212,14 +217,19 @@
       }
 
       @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
-        70%, 100% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+        0% {
+          box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+        }
+        70%,
+        100% {
+          box-shadow: 0 0 0 6px rgba(52, 211, 153, 0);
+        }
       }
 
       /* ── Hero ── */
       .hero {
         position: relative;
-        z-index: 1;
+        z-index: var(--z-base);
         padding: 136px var(--gutter) 44px;
       }
 
@@ -238,6 +248,10 @@
         letter-spacing: 0.08em;
         margin-bottom: 22px;
         animation: fadeUp 0.8s var(--ease) 0.08s backwards;
+      }
+
+      .hero-label i {
+        font-size: 0.625rem;
       }
 
       .hero-title {
@@ -269,14 +283,20 @@
       }
 
       @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(16px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       /* ── Main content ── */
       .main-content {
         position: relative;
-        z-index: 1;
+        z-index: var(--z-base);
         flex: 1;
         padding: 12px var(--gutter) 96px;
       }
@@ -298,7 +318,7 @@
         background: var(--bg-card);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border-radius: var(--radius);
+        border-radius: var(--radius-lg);
         overflow: hidden;
         padding: 24px;
         border: 1px solid var(--border);
@@ -316,8 +336,14 @@
       }
 
       @keyframes cardIn {
-        from { opacity: 0; transform: translateY(18px); }
-        to { opacity: 1; transform: translateY(0); }
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       /* Top specular rim highlight */
@@ -335,7 +361,9 @@
           transparent
         );
         opacity: 0.6;
-        transition: opacity 0.35s var(--ease), background 0.35s var(--ease);
+        transition:
+          opacity 0.35s var(--ease),
+          background 0.35s var(--ease);
         pointer-events: none;
       }
 
@@ -374,7 +402,7 @@
       .site-card:hover,
       .site-card:focus-visible {
         background: var(--bg-card-hover);
-        border-color: rgba(255, 255, 255, 0.15);
+        border-color: var(--border-hover);
         transform: translateY(-4px);
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.08),
@@ -387,16 +415,11 @@
         transition-duration: 0.15s;
       }
 
-      .card-top {
-        display: flex;
-        align-items: center;
-        margin-bottom: 16px;
-      }
-
       .card-icon-wrap {
         width: 44px;
         height: 44px;
-        border-radius: 12px;
+        margin-bottom: 16px;
+        border-radius: var(--radius-md);
         background: linear-gradient(135deg, rgba(229, 9, 20, 0.16), rgba(229, 9, 20, 0.06));
         border: 1px solid rgba(229, 9, 20, 0.2);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -451,7 +474,7 @@
 
       .tag {
         padding: 4px 10px;
-        border-radius: 6px;
+        border-radius: var(--radius-sm);
         font-size: 0.74rem;
         font-weight: 500;
         background: rgba(255, 255, 255, 0.035);
@@ -473,7 +496,7 @@
       /* ── Footer ── */
       .footer {
         position: relative;
-        z-index: 1;
+        z-index: var(--z-base);
         margin: 0 var(--gutter);
         padding: 32px 0 40px;
         border-top: 1px solid var(--border);
@@ -492,10 +515,10 @@
         position: fixed;
         bottom: 32px;
         right: 32px;
-        z-index: 998;
+        z-index: var(--z-floating);
         width: 44px;
         height: 44px;
-        border-radius: 12px;
+        border-radius: var(--radius-md);
         border: 1px solid var(--border);
         background: rgba(12, 12, 16, 0.82);
         backdrop-filter: blur(16px);
@@ -584,7 +607,9 @@
           scroll-behavior: auto;
         }
 
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
           animation-duration: 0.01ms !important;
           animation-delay: 0s !important;
           animation-iteration-count: 1 !important;
@@ -610,7 +635,7 @@
 
     <section class="hero" id="top">
       <div class="hero-label">
-        <i class="fa-solid fa-fire" style="font-size: 10px" aria-hidden="true"></i>
+        <i class="fa-solid fa-fire" aria-hidden="true"></i>
         影视资源聚合
       </div>
       <h1 class="hero-title">
@@ -629,9 +654,20 @@
       <span class="footer-text">© 2026 Movie Navigator · 仅供导航，不存储任何资源</span>
     </footer>
 
-    <button class="back-to-top" id="back-to-top" title="回到顶部" aria-label="回到顶部">
+    <button type="button" class="back-to-top" id="back-to-top" title="回到顶部" aria-label="回到顶部">
       <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
     </button>
+
+    <template id="site-card-template">
+      <a class="site-card" target="_blank" rel="noopener noreferrer">
+        <div class="card-icon-wrap">
+          <i aria-hidden="true"></i>
+        </div>
+        <h2 class="site-title"></h2>
+        <p class="site-desc"></p>
+        <div class="site-tags"></div>
+      </a>
+    </template>
 
     <script type="application/json" id="sites-data">
       {
@@ -757,61 +793,68 @@
         const header = document.getElementById("header");
         const backToTop = document.getElementById("back-to-top");
         const container = document.getElementById("sites-container");
-        const sitesData = JSON.parse(document.getElementById("sites-data").textContent);
-        const sites = sitesData.sites;
+        const template = document.getElementById("site-card-template");
+        const { sites } = JSON.parse(document.getElementById("sites-data").textContent);
 
-        const esc = s =>
-          String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+        const fragment = document.createDocumentFragment();
 
-        function renderCards() {
-          container.innerHTML = "";
-          sites.forEach((site, idx) => {
-            const card = document.createElement("a");
-            card.className = "site-card";
-            card.href = site.url;
-            card.target = "_blank";
-            card.rel = "noopener noreferrer";
-            card.setAttribute("aria-label", `${site.name}，在新标签页打开`);
-            card.style.setProperty("--index", idx);
-            card.innerHTML = `
-              <div class="card-top">
-                <div class="card-icon-wrap"><i class="${esc(site.icon)}" aria-hidden="true"></i></div>
-              </div>
-              <h3 class="site-title">${esc(site.name)}</h3>
-              <p class="site-desc">${esc(site.description)}</p>
-              <div class="site-tags">${site.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
-            `;
+        sites.forEach((site, idx) => {
+          const card = template.content.firstElementChild.cloneNode(true);
+          card.href = site.url;
+          card.setAttribute("aria-label", `${site.name}，在新标签页打开`);
+          card.style.setProperty("--index", idx);
 
-            card.addEventListener("mousemove", e => {
-              const rect = card.getBoundingClientRect();
-              card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-              card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-            });
+          card.querySelector(".card-icon-wrap i").className = site.icon || "fa-solid fa-play";
+          card.querySelector(".site-title").textContent = site.name;
+          card.querySelector(".site-desc").textContent = site.description;
 
-            container.appendChild(card);
+          const tagsContainer = card.querySelector(".site-tags");
+          site.tags.forEach(tagText => {
+            const tag = document.createElement("span");
+            tag.className = "tag";
+            tag.textContent = tagText;
+            tagsContainer.appendChild(tag);
           });
-        }
 
-        renderCards();
-
-        // Logo link: smooth scroll to top
-        document.querySelector(".logo-container").addEventListener("click", e => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          fragment.appendChild(card);
         });
 
-        // ── Scroll events
+        container.replaceChildren(fragment);
+
+        // Delegated spotlight effect
+        container.addEventListener(
+          "pointermove",
+          e => {
+            const card = e.target.closest(".site-card");
+            if (!card) return;
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+            card.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+          },
+          { passive: true }
+        );
+
+        // Scroll state synchronization
         let ticking = false;
-        window.addEventListener("scroll", () => {
-          if (!ticking) {
-            requestAnimationFrame(() => {
-              header.classList.toggle("scrolled", window.scrollY > 40);
-              backToTop.classList.toggle("visible", window.scrollY > 400);
-              ticking = false;
-            });
-            ticking = true;
-          }
-        });
+        const syncScrollState = () => {
+          const y = window.scrollY;
+          header.classList.toggle("scrolled", y > 40);
+          backToTop.classList.toggle("visible", y > 400);
+          ticking = false;
+        };
+
+        syncScrollState();
+
+        window.addEventListener(
+          "scroll",
+          () => {
+            if (!ticking) {
+              requestAnimationFrame(syncScrollState);
+              ticking = true;
+            }
+          },
+          { passive: true }
+        );
 
         backToTop.addEventListener("click", () => {
           window.scrollTo({ top: 0, behavior: "smooth" });

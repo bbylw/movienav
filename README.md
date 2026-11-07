@@ -16,6 +16,7 @@
   - 精心设计的卡片交互效果
 
 - **数据驱动**
+  - 使用 `<template>` 元素定义卡片视图模板
   - 使用 `<script type="application/json" id="sites-data">` 集中管理网站数据
   - 便于维护和扩展
 
