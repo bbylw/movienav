@@ -1,10 +1,23 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
   <head>
     <base href="https://websim-player/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>网飞电影导航</title>
+    <meta
+      name="description"
+      content="精选优质影视导航站点，涵盖在线播放、磁力下载、资源搜索等分类，一站直达。"
+    />
+    <meta property="og:title" content="网飞电影导航 · Movie Navigator" />
+    <meta
+      property="og:description"
+      content="精选优质影视导航站点，涵盖在线播放、磁力下载、资源搜索等分类，一站直达。"
+    />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='64' height='64'%3E %3Cdefs%3E %3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E %3Cstop offset='0' stop-color='%231c1c24'/%3E %3Cstop offset='1' stop-color='%230a0a0c'/%3E %3C/linearGradient%3E %3ClinearGradient id='red' x1='0' y1='0' x2='1' y2='1'%3E %3Cstop offset='0' stop-color='%23ff3b47'/%3E %3Cstop offset='1' stop-color='%23b20710'/%3E %3C/linearGradient%3E %3CradialGradient id='glow' cx='0.5' cy='0.5' r='0.5'%3E %3Cstop offset='0' stop-color='%23e50914' stop-opacity='0.45'/%3E %3Cstop offset='1' stop-color='%23e50914' stop-opacity='0'/%3E %3C/radialGradient%3E %3C/defs%3E %3Crect width='64' height='64' rx='15' fill='url(%23bg)'/%3E %3Crect x='1' y='1' width='62' height='62' rx='14' fill='none' stroke='%23ffffff' stroke-opacity='0.08' stroke-width='2'/%3E %3Ccircle cx='32' cy='32' r='26' fill='url(%23glow)'/%3E %3Cg fill='%23ffffff' fill-opacity='0.18'%3E %3Crect x='7' y='12' width='4' height='6' rx='1'/%3E %3Crect x='7' y='29' width='4' height='6' rx='1'/%3E %3Crect x='7' y='46' width='4' height='6' rx='1'/%3E %3Crect x='53' y='12' width='4' height='6' rx='1'/%3E %3Crect x='53' y='29' width='4' height='6' rx='1'/%3E %3Crect x='53' y='46' width='4' height='6' rx='1'/%3E %3C/g%3E %3Ccircle cx='32' cy='32' r='16' fill='url(%23red)'/%3E %3Ccircle cx='32' cy='32' r='16' fill='none' stroke='%23ffffff' stroke-opacity='0.25' stroke-width='1.5'/%3E %3Cpath d='M28 24.5 L41 32 L28 39.5 Z' fill='%23ffffff' stroke='%23ffffff' stroke-width='2' stroke-linejoin='round'/%3E %3C/svg%3E" />
+    <meta name="theme-color" content="#0a0a0c" />
+    <link rel="icon" type="image/svg+xml" href="https://raw.githubusercontent.com/bbylw/movienav/main/favicon.svg" />
     <meta name="theme-color" content="#0a0a0c" />
     <link
       rel="stylesheet"
@@ -25,12 +38,30 @@
         --accent-dim: rgba(229, 9, 20, 0.12);
         --accent-glow: rgba(229, 9, 20, 0.25);
         --text-primary: #f0eff4;
-        --text-secondary: #8a8994;
-        --text-muted: #5a5968;
+        --text-secondary: #9a99a6;
+        --text-muted: #7d7c8a;
         --border: rgba(255, 255, 255, 0.06);
         --border-hover: rgba(255, 255, 255, 0.12);
         --radius: 16px;
         --radius-sm: 8px;
+        --ease: cubic-bezier(0.22, 1, 0.36, 1);
+        --gutter: calc(max(0px, (100vw - 1400px) / 2) + 5vw);
+        --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      ::selection {
+        background: var(--accent);
+        color: #fff;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
       }
 
       * {
@@ -40,7 +71,9 @@
       }
 
       body {
-        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, var(--font-cjk);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
         background: var(--bg-primary);
         color: var(--text-primary);
         line-height: 1.5;
@@ -75,7 +108,7 @@
 
       /* ── Header ── */
       .header {
-        padding: 20px 5%;
+        padding: 20px var(--gutter);
         position: fixed;
         top: 0;
         left: 0;
@@ -84,21 +117,27 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        border-bottom: 1px solid transparent;
+        transition:
+          padding 0.5s var(--ease),
+          background-color 0.3s var(--ease),
+          border-color 0.3s var(--ease);
       }
 
       .header.scrolled {
-        padding: 14px 5%;
+        padding-block: 12px;
         background: rgba(10, 10, 12, 0.85);
         backdrop-filter: blur(24px) saturate(1.2);
         -webkit-backdrop-filter: blur(24px) saturate(1.2);
-        border-bottom: 1px solid var(--border);
+        border-bottom-color: var(--border);
       }
 
       .logo-container {
         display: flex;
         align-items: center;
-        gap: 14px;
+        gap: 12px;
+        color: inherit;
+        text-decoration: none;
       }
 
       .logo-mark {
@@ -109,21 +148,26 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
+        font-size: 14px;
         color: #fff;
-        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 6px 20px -6px var(--accent-glow);
+        transition: transform 0.4s var(--ease);
       }
 
-      .logo-mark:hover {
-        transform: scale(1.1) rotate(-4deg);
+      .logo-mark i {
+        margin-left: 2px;
+      }
+
+      .logo-container:hover .logo-mark {
+        transform: scale(1.08) rotate(-4deg);
       }
 
       .site-name {
-        font-family: "Space Grotesk", sans-serif;
+        font-family: "Space Grotesk", var(--font-cjk);
         color: var(--text-primary);
         font-size: 1.25rem;
         font-weight: 700;
-        letter-spacing: -0.5px;
+        letter-spacing: -0.02em;
       }
 
       .header-stats {
@@ -131,16 +175,20 @@
         align-items: center;
         gap: 20px;
         font-size: 0.8rem;
-        color: var(--text-muted);
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
+        color: var(--text-secondary);
+        letter-spacing: 0.02em;
         font-weight: 500;
+        font-variant-numeric: tabular-nums;
       }
 
-      .header-stats span {
+      .header-stats > span {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
+        padding: 6px 12px;
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        background: rgba(255, 255, 255, 0.02);
       }
 
       .pulse-dot {
@@ -148,21 +196,19 @@
         height: 6px;
         background: #34d399;
         border-radius: 50%;
-        animation: pulse 2s ease-in-out infinite;
+        animation: pulse 2.4s var(--ease) infinite;
       }
 
       @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.5; transform: scale(0.8); }
+        0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45); }
+        70%, 100% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
       }
 
       /* ── Hero ── */
       .hero {
         position: relative;
         z-index: 1;
-        padding: 140px 5% 60px;
-        max-width: 1400px;
-        margin: 0 auto;
+        padding: 140px var(--gutter) 48px;
       }
 
       .hero-label {
@@ -176,25 +222,21 @@
         font-size: 0.75rem;
         color: var(--accent);
         font-weight: 600;
-        letter-spacing: 0.8px;
-        text-transform: uppercase;
+        letter-spacing: 0.08em;
         margin-bottom: 24px;
-        opacity: 0;
-        transform: translateY(12px);
-        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        animation: fadeUp 0.8s var(--ease) 0.1s backwards;
       }
 
       .hero-title {
-        font-family: "Space Grotesk", sans-serif;
+        font-family: "Space Grotesk", var(--font-cjk);
         font-size: clamp(2.4rem, 5vw, 4rem);
         font-weight: 700;
-        letter-spacing: -2px;
-        line-height: 1.1;
+        letter-spacing: -0.01em;
+        line-height: 1.15;
         margin-bottom: 20px;
         max-width: 700px;
-        opacity: 0;
-        transform: translateY(16px);
-        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        text-wrap: balance;
+        animation: fadeUp 0.8s var(--ease) 0.2s backwards;
       }
 
       .hero-title .accent {
@@ -205,71 +247,75 @@
         font-size: 1.05rem;
         color: var(--text-secondary);
         max-width: 520px;
-        line-height: 1.7;
-        opacity: 0;
-        transform: translateY(16px);
-        animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+        line-height: 1.75;
+        text-wrap: pretty;
+        animation: fadeUp 0.8s var(--ease) 0.35s backwards;
       }
 
       @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(16px); }
         to { opacity: 1; transform: translateY(0); }
       }
-
-
 
       /* ── Main content ── */
       .main-content {
         position: relative;
         z-index: 1;
-        padding: 20px 5% 80px;
-        max-width: 1400px;
-        margin: 0 auto;
+        padding: 16px var(--gutter) 96px;
       }
 
       .section-header {
         display: flex;
         align-items: baseline;
-        gap: 16px;
-        margin-bottom: 32px;
+        gap: 12px;
+        margin-bottom: 24px;
       }
 
       .section-title {
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        font-family: "Space Grotesk", var(--font-cjk);
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
       }
 
       .section-count {
         font-size: 0.85rem;
         color: var(--text-muted);
         font-weight: 500;
+        font-variant-numeric: tabular-nums;
       }
 
-      /* ── Sites grid – masonry-style layout ── */
+      /* ── Sites grid ── */
       .sites-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
         gap: 16px;
       }
 
       /* ── Site card ── */
       .site-card {
         --index: 0;
+        display: flex;
+        flex-direction: column;
+        color: inherit;
+        text-decoration: none;
         background: var(--bg-card);
         border-radius: var(--radius);
         overflow: hidden;
-        cursor: pointer;
-        padding: 28px;
+        padding: 24px;
         border: 1px solid var(--border);
         position: relative;
-        transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        opacity: 0;
-        transform: translateY(20px);
-        animation: cardIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--index) * 60ms + 0.4s) forwards;
+        isolation: isolate;
+        transition:
+          transform 0.5s var(--ease),
+          background-color 0.3s var(--ease),
+          border-color 0.3s var(--ease),
+          box-shadow 0.5s var(--ease);
+        animation: cardIn 0.7s var(--ease) calc(var(--index) * 50ms + 0.4s) backwards;
       }
 
       @keyframes cardIn {
+        from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
       }
 
@@ -278,30 +324,33 @@
         content: "";
         position: absolute;
         inset: 0;
+        z-index: -1;
         background: radial-gradient(
           600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-          rgba(229, 9, 20, 0.06),
+          rgba(229, 9, 20, 0.07),
           transparent 40%
         );
         opacity: 0;
-        transition: opacity 0.4s ease;
+        transition: opacity 0.4s var(--ease);
         pointer-events: none;
-        border-radius: var(--radius);
       }
 
-      .site-card:hover::before {
+      .site-card:hover::before,
+      .site-card:focus-visible::before {
         opacity: 1;
       }
 
-      .site-card:hover {
+      .site-card:hover,
+      .site-card:focus-visible {
         background: var(--bg-card-hover);
         border-color: var(--border-hover);
         transform: translateY(-4px);
-        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 20px 40px -12px rgba(5, 2, 6, 0.6);
       }
 
       .site-card:active {
-        transform: translateY(-2px) scale(0.98);
+        transform: translateY(-1px) scale(0.985);
+        transition-duration: 0.15s;
       }
 
       .card-top {
@@ -319,10 +368,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        transition:
+          background-color 0.3s var(--ease),
+          transform 0.5s var(--ease);
       }
 
-      .site-card:hover .card-icon-wrap {
+      .site-card:hover .card-icon-wrap,
+      .site-card:focus-visible .card-icon-wrap {
         background: var(--accent-glow);
         transform: scale(1.08);
       }
@@ -337,35 +389,41 @@
         font-size: 0.85rem;
         opacity: 0;
         transform: translate(-4px, 4px);
-        transition: all 0.3s ease;
+        transition:
+          opacity 0.3s var(--ease),
+          transform 0.5s var(--ease),
+          color 0.3s var(--ease);
       }
 
-      .site-card:hover .card-arrow {
+      .site-card:hover .card-arrow,
+      .site-card:focus-visible .card-arrow {
         opacity: 1;
         transform: translate(0, 0);
         color: var(--accent);
       }
 
       .site-title {
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.15rem;
+        font-family: "Space Grotesk", var(--font-cjk);
+        font-size: 1.125rem;
         font-weight: 600;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.01em;
         margin-bottom: 8px;
         color: var(--text-primary);
       }
 
       .site-desc {
-        font-size: 0.88rem;
+        font-size: 0.875rem;
         color: var(--text-secondary);
-        line-height: 1.65;
+        line-height: 1.7;
         margin-bottom: 20px;
+        text-wrap: pretty;
       }
 
       .site-tags {
         display: flex;
-        gap: 6px;
+        gap: 8px;
         flex-wrap: wrap;
+        margin-top: auto;
       }
 
       .tag {
@@ -374,50 +432,44 @@
         font-size: 0.75rem;
         font-weight: 500;
         background: rgba(255, 255, 255, 0.04);
-        color: var(--text-muted);
+        color: var(--text-secondary);
         border: 1px solid rgba(255, 255, 255, 0.04);
-        transition: all 0.25s ease;
-        letter-spacing: 0.2px;
+        transition:
+          background-color 0.3s var(--ease),
+          color 0.3s var(--ease),
+          border-color 0.3s var(--ease);
       }
 
-      .site-card:hover .tag {
+      .site-card:hover .tag,
+      .site-card:focus-visible .tag {
         background: var(--accent-dim);
         color: var(--accent);
         border-color: rgba(229, 9, 20, 0.15);
+      }
+
+      /* Touch devices have no hover, so keep the affordance visible */
+      @media (hover: none) {
+        .card-arrow {
+          opacity: 0.7;
+          transform: none;
+        }
       }
 
       /* ── Footer ── */
       .footer {
         position: relative;
         z-index: 1;
-        padding: 40px 5%;
+        margin: 0 var(--gutter);
+        padding: 32px 0 40px;
         border-top: 1px solid var(--border);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        max-width: 1400px;
-        margin: 0 auto;
       }
 
       .footer-text {
         font-size: 0.8rem;
         color: var(--text-muted);
-      }
-
-      .footer-links {
-        display: flex;
-        gap: 20px;
-      }
-
-      .footer-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-size: 0.8rem;
-        transition: color 0.2s;
-      }
-
-      .footer-links a:hover {
-        color: var(--text-primary);
       }
 
       /* ── Back to top ── */
@@ -432,6 +484,7 @@
         border: 1px solid var(--border);
         background: rgba(10, 10, 12, 0.8);
         backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         color: var(--text-secondary);
         display: flex;
         align-items: center;
@@ -440,7 +493,12 @@
         opacity: 0;
         pointer-events: none;
         transform: translateY(8px);
-        transition: all 0.3s ease;
+        transition:
+          opacity 0.3s var(--ease),
+          transform 0.5s var(--ease),
+          background-color 0.3s var(--ease),
+          border-color 0.3s var(--ease),
+          color 0.3s var(--ease);
       }
 
       .back-to-top.visible {
@@ -455,14 +513,14 @@
         color: var(--text-primary);
       }
 
+      .back-to-top:active {
+        transform: scale(0.95);
+      }
+
       /* ── Responsive ── */
       @media (max-width: 768px) {
         .hero {
-          padding: 120px 5% 40px;
-        }
-
-        .hero-title {
-          letter-spacing: -1px;
+          padding: 112px var(--gutter) 32px;
         }
 
         .header-stats {
@@ -470,12 +528,11 @@
         }
 
         .sites-grid {
-          grid-template-columns: 1fr;
           gap: 12px;
         }
 
         .site-card {
-          padding: 22px;
+          padding: 20px;
         }
 
         .footer {
@@ -483,20 +540,20 @@
           gap: 16px;
           text-align: center;
         }
+
+        .back-to-top {
+          bottom: 20px;
+          right: 20px;
+        }
       }
 
       @media (max-width: 480px) {
         .hero {
-          padding: 110px 5% 32px;
+          padding: 96px var(--gutter) 24px;
         }
 
         .site-name {
           font-size: 1.1rem;
-        }
-
-        .search-bar input {
-          padding: 12px 16px 12px 44px;
-          font-size: 0.9rem;
         }
       }
 
@@ -508,31 +565,37 @@
 
       /* ── Reduced motion ── */
       @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
         *, *::before, *::after {
           animation-duration: 0.01ms !important;
+          animation-delay: 0s !important;
+          animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
         }
       }
     </style>
   </head>
   <body>
-    <div class="bg-mesh"></div>
+    <div class="bg-mesh" aria-hidden="true"></div>
 
     <header class="header" id="header">
-      <div class="logo-container">
+      <a class="logo-container" href="#top" aria-label="Movie Navigator 回到顶部">
         <div class="logo-mark">
-          <i class="fa-solid fa-play" style="font-size: 14px; margin-left: 2px"></i>
+          <i class="fa-solid fa-play"></i>
         </div>
         <span class="site-name">Movie Navigator</span>
-      </div>
+      </a>
       <div class="header-stats">
-        <span><span class="pulse-dot"></span> 全部在线</span>
+        <span><span class="pulse-dot" aria-hidden="true"></span><span id="site-count-header">精选站点</span></span>
       </div>
     </header>
 
-    <section class="hero">
+    <section class="hero" id="top">
       <div class="hero-label">
-        <i class="fa-solid fa-fire" style="font-size: 10px"></i>
+        <i class="fa-solid fa-fire" style="font-size: 10px" aria-hidden="true"></i>
         影视资源聚合
       </div>
       <h1 class="hero-title">
@@ -545,6 +608,10 @@
     </section>
 
     <main class="main-content">
+      <div class="section-header">
+        <h2 class="section-title">全部站点</h2>
+        <span class="section-count" id="site-count"></span>
+      </div>
       <div class="sites-grid" id="sites-container"></div>
     </main>
 
@@ -553,8 +620,8 @@
 
     </footer>
 
-    <button class="back-to-top" id="back-to-top" title="回到顶部">
-      <i class="fa-solid fa-arrow-up"></i>
+    <button class="back-to-top" id="back-to-top" title="回到顶部" aria-label="回到顶部">
+      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
     </button>
 
     <script type="application/json" id="sites-data">
@@ -685,22 +752,28 @@
         const sites = sitesData.sites;
 
         // ── Render cards
+        const esc = s =>
+          String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
         function renderCards() {
           container.innerHTML = "";
           sites.forEach((site, idx) => {
-            const card = document.createElement("div");
+            const card = document.createElement("a");
             card.className = "site-card";
+            card.href = site.url;
+            card.target = "_blank";
+            card.rel = "noopener noreferrer";
+            card.setAttribute("aria-label", `${site.name}，在新标签页打开`);
             card.style.setProperty("--index", idx);
             card.innerHTML = `
               <div class="card-top">
-                <div class="card-icon-wrap"><i class="${site.icon}"></i></div>
-                <i class="fa-solid fa-arrow-up-right card-arrow"></i>
+                <div class="card-icon-wrap"><i class="${esc(site.icon)}" aria-hidden="true"></i></div>
+                <i class="fa-solid fa-arrow-up-right card-arrow" aria-hidden="true"></i>
               </div>
-              <h3 class="site-title">${site.name}</h3>
-              <p class="site-desc">${site.description}</p>
-              <div class="site-tags">${site.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+              <h3 class="site-title">${esc(site.name)}</h3>
+              <p class="site-desc">${esc(site.description)}</p>
+              <div class="site-tags">${site.tags.map(t => `<span class="tag">${esc(t)}</span>`).join("")}</div>
             `;
-            card.addEventListener("click", () => window.open(site.url, "_blank", "noopener"));
 
             // Spotlight effect
             card.addEventListener("mousemove", e => {
@@ -712,9 +785,17 @@
             container.appendChild(card);
           });
 
+          document.getElementById("site-count").textContent = `${sites.length} 个站点`;
+          document.getElementById("site-count-header").textContent = `已收录 ${sites.length} 个站点`;
         }
 
         renderCards();
+
+        // Logo link: scroll instead of navigating (the page uses a <base> tag)
+        document.querySelector(".logo-container").addEventListener("click", e => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
 
         // ── Scroll events
         let ticking = false;
