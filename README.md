@@ -16,8 +16,7 @@
   - 精心设计的卡片交互效果
 
 - **数据驱动**
-  - 使用 `<template>` 元素定义卡片模板
-  - 使用 JSON 集中管理网站数据
+  - 使用 `<script type="application/json" id="sites-data">` 集中管理网站数据
   - 便于维护和扩展
 
 ## 技术栈
@@ -25,13 +24,14 @@
 - HTML5
 - CSS3
 - JavaScript (原生)
-- Font Awesome 6.7.2 (图标)
+- Font Awesome 7.3.1 (图标)
 
 ## 项目结构
 
 ```tree
 .
 ├── README.md        # 项目说明文档
+├── favicon.svg      # 网站矢量图标
 ├── index.html       # 主页面，包含所有 HTML、CSS 和 JavaScript
 └── LICENSE          # MIT 许可证文件
 ```
@@ -66,27 +66,29 @@
 
 ### 修改网站数据
 
-编辑 `index.html` 文件中的 `<script>` 标签内的 `sites` 数组：
+编辑 `index.html` 文件中的 `<script type="application/json" id="sites-data">` 标签内的 `sites` 数组：
 
-```javascript
-const sites = [
+```json
+{
+  "sites": [
     {
-        "title": "网站名称",
-        "url": "https://example.com",
-        "desc": "网站描述",
-        "tags": ["标签1", "标签2"],
-        "icon": "fa-solid fa-play"
+      "name": "网站名称",
+      "url": "https://example.com",
+      "icon": "fa-solid fa-play",
+      "description": "网站描述",
+      "tags": ["标签1", "标签2"]
     }
-];
+  ]
+}
 ```
 
 每个网站对象包含以下字段：
 
-- `title`: 网站名称
+- `name`: 网站名称
 - `url`: 网站链接地址
-- `desc`: 网站简短描述
+- `icon`: Font Awesome 图标类名（如 `fa-solid fa-play`）
+- `description`: 网站简短描述
 - `tags`: 网站标签数组
-- `icon`: Font Awesome 图标类名（可选，默认使用 fa-solid fa-play）
 
 > 图标可以在 [Font Awesome 图标库](https://fontawesome.com/icons) 中选择，复制对应图标的类名即可
 
