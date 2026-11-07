@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>网飞电影导航 · Movie Navigator</title>
+    <title>网飞电影导航</title>
     <meta
       name="description"
       content="精选优质影视导航站点，涵盖在线播放、磁力下载、资源搜索等分类，一站直达。"
@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
     <style>
@@ -45,11 +45,10 @@
         --border: rgba(255, 255, 255, 0.065);
         --border-hover: rgba(255, 255, 255, 0.14);
         --radius: 16px;
-        --radius-sm: 10px;
+        --radius-sm: 8px;
         --ease: cubic-bezier(0.22, 1, 0.36, 1);
         --gutter: calc(max(0px, (100vw - 1400px) / 2) + 5vw);
         --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
       }
 
       html {
@@ -221,7 +220,7 @@
       .hero {
         position: relative;
         z-index: 1;
-        padding: 136px var(--gutter) 32px;
+        padding: 136px var(--gutter) 44px;
       }
 
       .hero-label {
@@ -269,127 +268,6 @@
         animation: fadeUp 0.8s var(--ease) 0.24s backwards;
       }
 
-      /* ── Filter & Search Toolbar ── */
-      .toolbar {
-        margin-top: 32px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-        animation: fadeUp 0.8s var(--ease) 0.32s backwards;
-      }
-
-      .filter-pills {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-      }
-
-      .filter-pill {
-        appearance: none;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.025);
-        color: var(--text-secondary);
-        font-family: inherit;
-        font-size: 0.82rem;
-        font-weight: 500;
-        padding: 7px 14px;
-        border-radius: 100px;
-        cursor: pointer;
-        transition:
-          background-color 0.25s var(--ease),
-          color 0.25s var(--ease),
-          border-color 0.25s var(--ease),
-          transform 0.2s var(--ease);
-      }
-
-      .filter-pill:hover {
-        background: rgba(255, 255, 255, 0.06);
-        color: var(--text-primary);
-        border-color: var(--border-hover);
-      }
-
-      .filter-pill:active {
-        transform: scale(0.96);
-      }
-
-      .filter-pill.active {
-        background: var(--accent);
-        color: #fff;
-        border-color: rgba(255, 255, 255, 0.18);
-        box-shadow: 0 4px 16px -4px rgba(229, 9, 20, 0.5);
-      }
-
-      .search-box {
-        position: relative;
-        flex: 0 1 280px;
-        min-width: 220px;
-      }
-
-      .search-box i.search-icon {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 0.82rem;
-        color: var(--text-muted);
-        pointer-events: none;
-        transition: color 0.25s var(--ease);
-      }
-
-      .search-input {
-        width: 100%;
-        padding: 8px 38px 8px 36px;
-        border-radius: 100px;
-        border: 1px solid var(--border);
-        background: rgba(255, 255, 255, 0.025);
-        color: var(--text-primary);
-        font-family: inherit;
-        font-size: 0.84rem;
-        outline: none;
-        transition:
-          border-color 0.25s var(--ease),
-          background-color 0.25s var(--ease),
-          box-shadow 0.25s var(--ease);
-      }
-
-      .search-input::placeholder {
-        color: var(--text-muted);
-      }
-
-      .search-input:focus {
-        background: rgba(255, 255, 255, 0.045);
-        border-color: rgba(229, 9, 20, 0.45);
-        box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.12);
-      }
-
-      .search-box:focus-within i.search-icon {
-        color: var(--accent-light);
-      }
-
-      .search-kbd {
-        position: absolute;
-        right: 11px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-family: var(--font-mono);
-        font-size: 0.68rem;
-        color: var(--text-muted);
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--border);
-        border-radius: 5px;
-        padding: 1px 6px;
-        pointer-events: none;
-        transition: opacity 0.2s var(--ease);
-      }
-
-      .search-box:focus-within .search-kbd,
-      .search-box.has-value .search-kbd {
-        opacity: 0;
-      }
-
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(16px); }
         to { opacity: 1; transform: translateY(0); }
@@ -434,7 +312,7 @@
           background-color 0.3s var(--ease),
           border-color 0.3s var(--ease),
           box-shadow 0.45s var(--ease);
-        animation: cardIn 0.65s var(--ease) calc(var(--index) * 45ms + 0.15s) backwards;
+        animation: cardIn 0.65s var(--ease) calc(var(--index) * 45ms + 0.3s) backwards;
       }
 
       @keyframes cardIn {
@@ -512,7 +390,6 @@
       .card-top {
         display: flex;
         align-items: center;
-        justify-content: space-between;
         margin-bottom: 16px;
       }
 
@@ -548,73 +425,6 @@
         font-size: 1.08rem;
       }
 
-      .card-meta-right {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .site-domain {
-        font-family: var(--font-mono);
-        font-size: 0.72rem;
-        color: var(--text-muted);
-        padding: 3px 9px;
-        border-radius: 6px;
-        background: rgba(255, 255, 255, 0.025);
-        border: 1px solid rgba(255, 255, 255, 0.04);
-        letter-spacing: -0.01em;
-        transition:
-          color 0.3s var(--ease),
-          border-color 0.3s var(--ease),
-          background-color 0.3s var(--ease);
-      }
-
-      .site-card:hover .site-domain,
-      .site-card:focus-visible .site-domain {
-        color: var(--text-secondary);
-        border-color: rgba(255, 255, 255, 0.1);
-        background: rgba(255, 255, 255, 0.045);
-      }
-
-      .card-arrow {
-        width: 28px;
-        height: 28px;
-        border-radius: 8px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-muted);
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid transparent;
-        opacity: 0.55;
-        transform: translate(-2px, 2px);
-        transition:
-          opacity 0.3s var(--ease),
-          transform 0.45s var(--ease),
-          color 0.3s var(--ease),
-          background-color 0.3s var(--ease),
-          border-color 0.3s var(--ease);
-      }
-
-      .card-arrow svg {
-        width: 14px;
-        height: 14px;
-        stroke: currentColor;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        fill: none;
-      }
-
-      .site-card:hover .card-arrow,
-      .site-card:focus-visible .card-arrow {
-        opacity: 1;
-        transform: translate(0, 0);
-        color: #ff4752;
-        background: var(--accent-dim);
-        border-color: rgba(229, 9, 20, 0.22);
-      }
-
       .site-title {
         font-family: "Space Grotesk", var(--font-cjk);
         font-size: 1.125rem;
@@ -622,7 +432,6 @@
         letter-spacing: -0.01em;
         margin-bottom: 8px;
         color: var(--text-primary);
-        transition: color 0.25s var(--ease);
       }
 
       .site-desc {
@@ -659,54 +468,6 @@
         background: var(--accent-dim);
         color: #ff5861;
         border-color: rgba(229, 9, 20, 0.2);
-      }
-
-      /* Empty search state */
-      .empty-state {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 64px 24px;
-        border-radius: var(--radius);
-        border: 1px dashed var(--border);
-        background: rgba(255, 255, 255, 0.015);
-        color: var(--text-secondary);
-      }
-
-      .empty-state i {
-        font-size: 1.6rem;
-        color: var(--text-muted);
-        margin-bottom: 12px;
-        display: block;
-      }
-
-      .empty-state p {
-        font-size: 0.92rem;
-        margin-bottom: 14px;
-      }
-
-      .empty-reset {
-        appearance: none;
-        border: 1px solid var(--border-hover);
-        background: rgba(255, 255, 255, 0.04);
-        color: var(--text-primary);
-        font-family: inherit;
-        font-size: 0.8rem;
-        padding: 6px 14px;
-        border-radius: 100px;
-        cursor: pointer;
-        transition: background-color 0.2s var(--ease);
-      }
-
-      .empty-reset:hover {
-        background: rgba(255, 255, 255, 0.09);
-      }
-
-      /* Touch devices have no hover, so keep the affordance visible */
-      @media (hover: none) {
-        .card-arrow {
-          opacity: 0.75;
-          transform: none;
-        }
       }
 
       /* ── Footer ── */
@@ -774,23 +535,10 @@
       /* ── Responsive ── */
       @media (max-width: 768px) {
         .hero {
-          padding: 108px var(--gutter) 24px;
+          padding: 112px var(--gutter) 32px;
         }
 
         .header-stats {
-          display: none;
-        }
-
-        .toolbar {
-          margin-top: 24px;
-        }
-
-        .search-box {
-          flex: 1 1 100%;
-          order: -1;
-        }
-
-        .search-kbd {
           display: none;
         }
 
@@ -816,7 +564,7 @@
 
       @media (max-width: 480px) {
         .hero {
-          padding: 96px var(--gutter) 20px;
+          padding: 96px var(--gutter) 24px;
         }
 
         .site-name {
@@ -871,28 +619,6 @@
       <p class="hero-desc">
         精选优质影视导航站点，涵盖在线播放、磁力下载、资源搜索等分类，一站直达。
       </p>
-
-      <div class="toolbar" role="search">
-        <div class="filter-pills" id="filter-pills" role="group" aria-label="站点分类筛选">
-          <button type="button" class="filter-pill active" data-tag="all">全部</button>
-          <button type="button" class="filter-pill" data-tag="在线播放">在线播放</button>
-          <button type="button" class="filter-pill" data-tag="高清">高清影视</button>
-          <button type="button" class="filter-pill" data-tag="资源">资源聚合</button>
-          <button type="button" class="filter-pill" data-tag="更新快">更新快</button>
-        </div>
-        <div class="search-box" id="search-box">
-          <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
-          <input
-            type="search"
-            id="search-input"
-            class="search-input"
-            placeholder="搜索站点名称、域名或标签…"
-            aria-label="搜索影视站点"
-            autocomplete="off"
-          />
-          <kbd class="search-kbd" aria-hidden="true">/</kbd>
-        </div>
-      </div>
     </section>
 
     <main class="main-content">
@@ -1031,85 +757,25 @@
         const header = document.getElementById("header");
         const backToTop = document.getElementById("back-to-top");
         const container = document.getElementById("sites-container");
-        const searchInput = document.getElementById("search-input");
-        const searchBox = document.getElementById("search-box");
-        const filterPills = document.getElementById("filter-pills");
         const sitesData = JSON.parse(document.getElementById("sites-data").textContent);
         const sites = sitesData.sites;
-
-        let activeTag = "all";
-        let query = "";
 
         const esc = s =>
           String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
-        const getDomain = url => {
-          try {
-            return new URL(url).hostname.replace(/^www\./, "");
-          } catch {
-            return "";
-          }
-        };
-
         function renderCards() {
           container.innerHTML = "";
-          const q = query.trim().toLowerCase();
-
-          const filtered = sites.filter(site => {
-            const domain = getDomain(site.url).toLowerCase();
-            const matchTag =
-              activeTag === "all" ||
-              site.tags.some(t => t.includes(activeTag)) ||
-              (activeTag === "在线播放" && site.tags.some(t => t.includes("在线") || t.includes("观看")));
-            const matchQuery =
-              !q ||
-              site.name.toLowerCase().includes(q) ||
-              site.description.toLowerCase().includes(q) ||
-              domain.includes(q) ||
-              site.tags.some(t => t.toLowerCase().includes(q));
-            return matchTag && matchQuery;
-          });
-
-          if (filtered.length === 0) {
-            const empty = document.createElement("div");
-            empty.className = "empty-state";
-            empty.innerHTML = `
-              <i class="fa-solid fa-film" aria-hidden="true"></i>
-              <p>未找到匹配的影视站点</p>
-              <button type="button" class="empty-reset">清除筛选条件</button>
-            `;
-            empty.querySelector(".empty-reset").addEventListener("click", () => {
-              activeTag = "all";
-              query = "";
-              searchInput.value = "";
-              searchBox.classList.remove("has-value");
-              filterPills.querySelectorAll(".filter-pill").forEach(btn => {
-                btn.classList.toggle("active", btn.dataset.tag === "all");
-              });
-              renderCards();
-            });
-            container.appendChild(empty);
-            return;
-          }
-
-          filtered.forEach((site, idx) => {
-            const domain = getDomain(site.url);
+          sites.forEach((site, idx) => {
             const card = document.createElement("a");
             card.className = "site-card";
             card.href = site.url;
             card.target = "_blank";
             card.rel = "noopener noreferrer";
-            card.setAttribute("aria-label", `${site.name} (${domain})，在新标签页打开`);
+            card.setAttribute("aria-label", `${site.name}，在新标签页打开`);
             card.style.setProperty("--index", idx);
             card.innerHTML = `
               <div class="card-top">
                 <div class="card-icon-wrap"><i class="${esc(site.icon)}" aria-hidden="true"></i></div>
-                <div class="card-meta-right">
-                  <span class="site-domain">${esc(domain)}</span>
-                  <span class="card-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8"/></svg>
-                  </span>
-                </div>
               </div>
               <h3 class="site-title">${esc(site.name)}</h3>
               <p class="site-desc">${esc(site.description)}</p>
@@ -1127,32 +793,6 @@
         }
 
         renderCards();
-
-        // Filter pills
-        filterPills.addEventListener("click", e => {
-          const btn = e.target.closest(".filter-pill");
-          if (!btn) return;
-          activeTag = btn.dataset.tag;
-          filterPills.querySelectorAll(".filter-pill").forEach(b => b.classList.toggle("active", b === btn));
-          renderCards();
-        });
-
-        // Search input
-        searchInput.addEventListener("input", e => {
-          query = e.target.value;
-          searchBox.classList.toggle("has-value", query.length > 0);
-          renderCards();
-        });
-
-        // Keyboard shortcut '/' to focus search
-        window.addEventListener("keydown", e => {
-          if (e.key === "/" && document.activeElement !== searchInput && !["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName)) {
-            e.preventDefault();
-            searchInput.focus();
-          } else if (e.key === "Escape" && document.activeElement === searchInput) {
-            searchInput.blur();
-          }
-        });
 
         // Logo link: smooth scroll to top
         document.querySelector(".logo-container").addEventListener("click", e => {
